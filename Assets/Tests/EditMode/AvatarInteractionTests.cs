@@ -47,7 +47,8 @@ namespace Tests
             var avatar = Resources.Load("avatar") as GameObject;
             var playerAvatar = avatar.GetComponent<PlayerAvatar>();
             playerAvatar.avatarsPermission = PermissionLevel.Student;    
-            playerAvatar.OnClickActionable(actionable);                       
+            var result = playerAvatar.OnClickActionable(actionable);      
+            Assert.IsFalse(result);                 
         }
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
     {
         public PermissionLevel avatarsPermission { get; set; }
 
-        public void OnClickActionable(ActionableObject thing)
+        public bool OnClickActionable(ActionableObject thing)
         {
-            thing.OnClick(avatarsPermission);
+            return thing.OnClick(avatarsPermission);
         }
     }
 

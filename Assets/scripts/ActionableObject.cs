@@ -12,15 +12,16 @@ using System;
             //Debug.Log(NameOfThisObject + " has been activated.");
         }
         // Start is called before the first frame update
-        public void OnClick(PermissionLevel level)
+        public bool OnClick(PermissionLevel level)
         {
             if (permissionNeeded == level)
             {
                 ThingThatHappens();
+                return true;
             }
             else
             {
-                //Debug.Log("Denied");
+               return false;
             }
         }
     }
