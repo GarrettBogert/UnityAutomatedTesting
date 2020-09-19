@@ -46,6 +46,7 @@ namespace Tests
         {
             var avatar = Resources.Load("avatar") as GameObject;
             var playerAvatar = avatar.GetComponent<PlayerAvatar>();
+            avatar.SetActive(true);//Because this is an edit mode test, and UnityEngine's StartCoroutine requires the actual game object to be active.
             playerAvatar.avatarsPermission = PermissionLevel.Student;    
             var result = playerAvatar.OnClickActionable(actionable);      
             Assert.IsFalse(result);                 

@@ -12,7 +12,6 @@ namespace Tests
 {
     public class AvatarTests : AvatarTestsBase
     {
-
         [UnityTest]
         public IEnumerator Third_person_camera_doesnt_phase_through_walls()
         {
