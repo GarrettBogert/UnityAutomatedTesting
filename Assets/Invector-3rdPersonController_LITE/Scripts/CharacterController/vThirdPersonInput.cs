@@ -21,7 +21,7 @@ namespace Invector.vCharacterController
         [HideInInspector] public vThirdPersonController cc;
         [HideInInspector] public vThirdPersonCamera tpCamera;
         [HideInInspector] public Camera cameraMain;
-        [HideInInspector] public IInput axisInput;
+        [HideInInspector] public IInput axisInput;//My quick addition to this asset's class.
 
         #endregion
 
@@ -46,6 +46,11 @@ namespace Invector.vCharacterController
 
         public virtual void OnAnimatorMove()
         {
+            if(cc == null){
+ cc = GetComponent<vThirdPersonController>();
+            cc.Init();
+            }
+           
             cc.ControlAnimatorRootMotion(); // handle root motion animations 
         }
 
@@ -53,10 +58,10 @@ namespace Invector.vCharacterController
 
         protected virtual void InitilizeController()
         {
+            //Defaults to production implementation, but my test script can jump in and override the service since its public. 
+            //Not yet sure how I would have a container dependency inject this input service depending on the current assembly... could be done though.
            if(axisInput == null) axisInput = new ProductionInput();
-            cc = GetComponent<vThirdPersonController>();
-
-            if (cc != null)
+            cc = GetComponent<vThirdPersonController>();         
                 cc.Init();
         }
 
@@ -77,6 +82,7 @@ namespace Invector.vCharacterController
 
         protected virtual void InputHandle(IInput axisInput)
         {
+            //I don't care to automate other inputs, standard wasd and mouse is good for this demo.
             MoveInput(axisInput);
             CameraInput(axisInput);
             SprintInput();

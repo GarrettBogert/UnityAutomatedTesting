@@ -19,7 +19,7 @@ namespace Tests
             yield return null;
             var avatar = GameObject.Find("ThirdPersonController_LITE");
             var avatarCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            //Creating a bunch of noise to see if we can cause the player cam to clip a boundary set at z = 5;
+            //Creating a bunch of vector2 noise to see if we can cause the player cam to clip through a collider's surface set at z = 5;
             var movementsPerFrame = getRandomVector2s(2500, -12, 12);
 
             var inputService = new ScriptableInput();
@@ -31,7 +31,7 @@ namespace Tests
                 allCameraZPositions.Add(avatarCamera.transform.position.z);
                 var input = new MockInput(movementsPerFrame[i], Vector2.zero);
                 inputService.input = input;
-                yield return null;
+                yield return null; // Yield return null allows the next frame to render.
             }
             Assert.IsFalse(allCameraZPositions.Where(p => p > 5).Any());
         }
@@ -42,7 +42,7 @@ namespace Tests
             SceneManager.LoadScene(this.TestScenePath, LoadSceneMode.Single);
             yield return null;
             var avatar = GameObject.Find("ThirdPersonController_LITE");
-            var inputService = new ScriptableInput();
+            var inputService = avatar.AddComponent<ScriptableInput>();
             avatar.GetComponent<vThirdPersonInput>().axisInput = inputService;
             Vector3 lastPosition = avatar.transform.position;
 
@@ -50,7 +50,7 @@ namespace Tests
             var input = new MockInput(Vector2.zero, Vector2.up);
             inputService.input = input;
             yield return new WaitForSeconds(1);
-            Assert.IsTrue(avatar.transform.position.z < lastPosition.z);
+            Assert.IsTrue(avatar.transform.position.z < lastPosition.z);//Avatar is facing negative z, so some of these value comparisons will appear flipped.
             lastPosition = avatar.transform.position;
 
             //Move player back 
