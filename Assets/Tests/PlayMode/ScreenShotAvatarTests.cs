@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using CharacterInput;
 using System.Linq;
 
+
 namespace Tests
 {
     public class ScreenshotAvatarTests : AvatarTestsBase

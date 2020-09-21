@@ -1,0 +1,16 @@
+{
+    "name": "TestUtilities",
+    "references": [
+        "GUID:90fc56cb72029ea438e8e18955dd01dc",
+        "GUID:59eaa796aeae69940b91882da62b6bf1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
