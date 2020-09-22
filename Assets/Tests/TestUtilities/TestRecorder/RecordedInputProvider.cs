@@ -31,7 +31,7 @@ namespace CharacterInput
                     return 0f;
             }
         }
-
+        
         void Update()
         {
             if (inputIndex < input.JsonFriendlyInputs.Length)

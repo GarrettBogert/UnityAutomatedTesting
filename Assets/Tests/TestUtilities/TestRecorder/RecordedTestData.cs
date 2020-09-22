@@ -10,6 +10,8 @@ using System.Linq;
 [Serializable]
 public class RecordedTestData
 {
+    //This is the input object that gets fed into our custom input provider for 
+    //recorded tests. 
     public RecordedTestData(string scene, string scenePath, string time)
     {
         SceneName = scene;
@@ -37,6 +39,8 @@ public class RecordedTestData
     {
         Inputs.Add(input);
     }
+    //TODO: Refactor this so that either A.-There is one single inputs field that
+    //is serialize-able, or B.- Get JSON.NET for unity.
     public void SetInputs()
     {
         JsonFriendlyInputs = Inputs.ToArray();

@@ -6,13 +6,13 @@ using System;
 using UnityEditor;
 public class TestRecorder : MonoBehaviour
 {
-    
-    RecordedTestData test;
 
-    //I decided for now, it was most simple to represent this list of frame-by-frame inputs as a json document
+    RecordedTestData test;
+    bool isRecording;
+
     void Start()
     {
-        test = new RecordedTestData(SceneManager.GetActiveScene().name,SceneManager.GetActiveScene().path, DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss"));
+        test = new RecordedTestData(SceneManager.GetActiveScene().name, SceneManager.GetActiveScene().path, DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss"));
     }
 
     void OnDisable()
@@ -22,6 +22,7 @@ public class TestRecorder : MonoBehaviour
 
     void CaptureRecording()
     {
+        isRecording = false;
         string fileName = $"{test.SceneName}_{test.TimeOfRecord}";
         test.SetInputs();
 
@@ -36,11 +37,12 @@ public class TestRecorder : MonoBehaviour
             sw.Write(JsonUtility.ToJson(test));
         }
         //Write the test C# code
-       using (var sw = new StreamWriter(testFolderPath + $"/REC_{fileName}.cs"))
-        {     
-            var csharpClassFriendlyName = "REC_" + test.TimeOfRecord.Replace('-','_');
-            sw.Write(cSharpTemplate(jsonFilePath,csharpClassFriendlyName));
-        }        
+        using (var sw = new StreamWriter(testFolderPath + $"/REC_{fileName}.cs"))
+        {
+            var csharpClassFriendlyName = "REC_" + test.TimeOfRecord.Replace('-', '_');
+            sw.Write(cSharpTemplate(jsonFilePath, csharpClassFriendlyName));
+        }
+        test = null;
     }
 
     SingleFrameInputs getInput()
@@ -52,23 +54,40 @@ public class TestRecorder : MonoBehaviour
             MouseX = Input.GetAxis("Mouse X"),
             MouseY = Input.GetAxis("Mouse Y"),
             ScreenShotPressed = Input.GetKeyDown(KeyCode.L)
-            
+
         };
         return input;
     }
 
-    // Update is called once per frame
+    // TODO: Update loop is not time-based, so inputs may run slower/out-of-sync
+    //on machines other than mine. Perhaps move to using fixedupdate() at some point.
     void Update()
     {
-        test.CaptureInput(getInput());
-        if (Input.GetKeyDown(KeyCode.P))//Arbitrarily assigned P to stopping the test record 
-            CaptureRecording();
+        if (isRecording)
+        {
+            test.CaptureInput(getInput());
+        }
+
+        //Arbitrarily assigned P to starting/stopping test recording.
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isRecording)
+            {
+                CaptureRecording();
+            }
+            else
+            {
+                isRecording = true;
+            }
+        }
     }
 
 
-    string cSharpTemplate(string pathToJson, string testClass){
-        using(StreamReader sr = new StreamReader(@"Assets/Tests/TestUtilities/TestRecorder/CSharpTestTemplate.txt")){
-            return sr.ReadToEnd().Replace("PATHTOJSON",pathToJson).Replace("TESTCLASS",testClass);
+    string cSharpTemplate(string pathToJson, string testClass)
+    {
+        using (StreamReader sr = new StreamReader(@"Assets/Tests/TestUtilities/TestRecorder/CSharpTestTemplate.txt"))
+        {
+            return sr.ReadToEnd().Replace("PATHTOJSON", pathToJson).Replace("TESTCLASS", testClass);
         }
     }
 }
