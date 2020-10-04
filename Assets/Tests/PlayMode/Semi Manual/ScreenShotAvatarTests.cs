@@ -11,13 +11,12 @@ using System.Linq;
 
 namespace Tests
 {
+    //Todo: Set up this fixture to take a source of IInteractables and iterate executions on.
     public class ScreenshotAvatarTests : AvatarTestsBase
     {
         [UnityTest]
         public IEnumerator Verify_object_interaction_with_screenshot()
-        {
-            SceneManager.LoadScene(this.TestScenePath, LoadSceneMode.Single);
-            yield return null;
+        {            
             var avatar = GameObject.Find("Avatar") as GameObject;
             var playerAvatar = avatar.GetComponent<PlayerAvatar>();
             avatar.SetActive(true);
@@ -31,6 +30,7 @@ namespace Tests
             recorderObj.AddComponent<ScreenRecorder>();
             var recorderComponent = recorderObj.GetComponent<ScreenRecorder>();
             recorderComponent.TakeScreenshot();
+            Assert.Inconclusive("Test ran without error but needs human eyes on screenshot to verify pass/fail.");
         }
     }
 }

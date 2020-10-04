@@ -8,16 +8,11 @@ public class TestRecorder : MonoBehaviour
 {
 
     RecordedTestData test;
-    bool isRecording;
+    bool isRecording = false;
 
     void Start()
     {
         test = new RecordedTestData(SceneManager.GetActiveScene().name, SceneManager.GetActiveScene().path, DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss"));
-    }
-
-    void OnDisable()
-    {
-        CaptureRecording();
     }
 
     void CaptureRecording()

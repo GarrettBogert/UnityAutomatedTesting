@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+
 public class PlayerAvatar : MonoBehaviour
 { 
     public PermissionLevel avatarsPermission { get; set; }
@@ -9,7 +11,6 @@ public class PlayerAvatar : MonoBehaviour
     {
         //This is just an example of a side effect of some interactive functionality that needs to be visually verified by a human being (at least until I make machine learning that can do it for us).
         GameObject.Find("Text").GetComponent<Text>().text = message;
-
     }
     public bool OnClickActionable(ActionableObject thing)
     {

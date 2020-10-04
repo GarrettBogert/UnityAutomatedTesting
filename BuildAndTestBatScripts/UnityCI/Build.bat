@@ -1,0 +1,2 @@
+cd C:\Program Files\Unity\Hub\Editor\2020.1.5f1\Editor
+unity.exe -runTests -projectPath "E:\UNITY PROJECTS\AutomatedTestingDemo" -testResults "C:\Users\Garrett\Desktop\Tests\result.xml" -testPlatform PlayMode

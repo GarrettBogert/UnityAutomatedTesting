@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using System.Linq;
-using System;
-using System.IO;
 namespace Tests
 {
     public class AdminPermissionActionablesProvider : IEnumerable<GameObject>
@@ -44,6 +39,8 @@ namespace Tests
         [Test]
         public void Student_privileged_player_cannot_interact_with_teacher_permissioned_clickable()
         {
+            //The UI canvas is currently a dependency of the playerAvatar, but not coupled with it.            
+            var uiCanvas = Resources.Load("Canvas") as GameObject;
             var avatar = Resources.Load("avatar") as GameObject;
             var playerAvatar = avatar.GetComponent<PlayerAvatar>();
             avatar.SetActive(true);
